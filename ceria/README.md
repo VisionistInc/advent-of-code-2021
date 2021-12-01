@@ -1,7 +1,6 @@
-![Kotlin](./kotlin-1.svg)
-<img src="./kotlin-1.svg" width="250" height="250">
+<center><img src="./kotlin-1.svg" width="250" height="250"></center>
 
-# Advent of Code 2021 - in [Kotlin] (https://kotlinlang.org/)!
+# Advent of Code 2021 - in [Kotlin](https://kotlinlang.org/)
 
 I'm going to attempt (likely with varying degrees of motivation) to implement all of the advent of code problems in Kotlin. Since [VSCode] (https://code.visualstudio.com/) and other IDEs rely on [Gradle] (https://gradle.org/) or Maven at the moment to supply code completion for Kotlin, each day of the advent is a simple Gradle project. You do not need to have Gradle or Kotlin installed. Using either option of execution descbied below, you only need to have Java 11 installed.
 
