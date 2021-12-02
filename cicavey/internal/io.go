@@ -19,5 +19,24 @@ func ReadIntLines(file string) []int64 {
 		input = append(input, value)
 	}
 
+	if scanner.Err() != nil {
+		panic(scanner.Err())
+	}
+
 	return input
+}
+
+func ForLine(fname string, fn func(line string)) {
+	f, _ := os.Open(fname)
+	defer f.Close()
+
+	scanner := bufio.NewScanner(f)
+
+	for scanner.Scan() {
+		fn(scanner.Text())
+	}
+
+	if scanner.Err() != nil {
+		panic(scanner.Err())
+	}
 }
