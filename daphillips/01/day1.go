@@ -1,35 +1,11 @@
 package main
 
 import (
-	"bufio"
+	"aoc2021/utils"
 	"fmt"
 	"log"
-	"os"
 	"strconv"
 )
-
-// gets the data for a file line by line
-func readFile(fileName string) []string {
-	file, err := os.Open(fileName)
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	defer file.Close()
-
-	var lines []string
-
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		lines = append(lines, scanner.Text())
-	}
-
-	if scanner.Err() != nil {
-		log.Fatal(scanner.Err())
-	}
-	return lines
-}
 
 func part1(lines *[]string) {
 	var previous, numIncreasing int
@@ -77,7 +53,7 @@ func part2(lines *[]string) {
 }
 
 func main() {
-	lines := readFile("input.txt")
+	lines := utils.ReadFile("input.txt")
 	part1(&lines)
 	part2(&lines)
 }
