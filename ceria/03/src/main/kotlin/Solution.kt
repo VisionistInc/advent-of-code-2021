@@ -14,9 +14,8 @@ private fun solution1(input: List<String>) :Long {
 
     for (diagnostic in input) {
         for (c in diagnostic.indices) {
-            val biVal = diagnostic.get(c)
-            if (biVal.equals('0')) {
-                var count = zerosMap.get(c)?.let{
+            if (diagnostic.get(c).equals('0')) {
+                val count = zerosMap.get(c)?.let{
                     zerosMap.get(c)
                 } ?: 0
                 zerosMap.put(c, count + 1)
@@ -25,7 +24,7 @@ private fun solution1(input: List<String>) :Long {
     }
 
     for (c in input.get(0).indices) {
-        var count = zerosMap.get(c)?.let{
+        val count = zerosMap.get(c)?.let{
             zerosMap.get(c)
         } ?: 0
         if (count > threshold) {
@@ -41,36 +40,20 @@ private fun solution1(input: List<String>) :Long {
 }
     
 private fun solution2(input: List<String>) :Long {
-    var o2Pos = 0
-    var o2Input = filter(input, o2Pos, false)
-    while (o2Input.size > 1) {
-        o2Pos += 1
-        o2Input = filter(o2Input, o2Pos, false)
-    }
-
-    var co2Pos = 0
-    var co2Input = filter(input, co2Pos, true)
-    while (co2Input.size > 1) { 
-        co2Pos += 1
-        co2Input = filter(co2Input, co2Pos, true)
-    }
-
-    return o2Input.get(0).toLong(2) * co2Input.get(0).toLong(2)
+    return filter(input, 0, false).get(0).toLong(2) * filter(input, 0, true).get(0).toLong(2)
 }  
 
 private fun filter(input: List<String>, pos: Int, isCo2Filter: Boolean): List<String> {
-    val threshold = input.size / 2
     var filterVal = '1'
 
     var count = 0
     for (diagnostic in input) {
-        val biVal = diagnostic.get(pos)
-        if (biVal.equals('0')) {
+        if (diagnostic.get(pos).equals('0')) {
             count++
         }
     }
 
-    if (count > threshold) {
+    if (count > input.size / 2) {
         filterVal = '0'
     }
 
@@ -82,5 +65,9 @@ private fun filter(input: List<String>, pos: Int, isCo2Filter: Boolean): List<St
         }
     }
 
-    return input.filter { it.get(pos) == filterVal }
+    val filtered = input.filter { it.get(pos) == filterVal }
+    if (filtered.size > 1) {
+        return filter(filtered, pos + 1, isCo2Filter)
+    }
+    return filtered
 }
