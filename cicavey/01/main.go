@@ -1,7 +1,7 @@
 package main
 
 import (
-	"aoc2021/internal"
+	"aoc2021/aoc"
 	"fmt"
 )
 
@@ -18,7 +18,7 @@ func countInc(input []int64) int64 {
 }
 
 func main() {
-	input := internal.ReadIntLines("input.txt")
+	input := aoc.ReadIntLines("input.txt")
 
 	fmt.Println(countInc(input))
 

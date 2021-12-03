@@ -1,7 +1,7 @@
 package main
 
 import (
-	"aoc2021/internal"
+	"aoc2021/aoc"
 	"fmt"
 	"strconv"
 	"strings"
@@ -16,7 +16,7 @@ func main() {
 
 	var cmds []cmd
 
-	internal.ForLine("input.txt", func(line string) {
+	aoc.ForLine("input.txt", func(line string) {
 		temp_cmd := strings.Fields(line)
 		v, _ := strconv.ParseInt(temp_cmd[1], 10, 64)
 		cmds = append(cmds, cmd{temp_cmd[0], v})
