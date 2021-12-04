@@ -3,7 +3,9 @@ package aoc
 import (
 	"bufio"
 	"os"
+	"regexp"
 	"strconv"
+	"strings"
 )
 
 func Filter[T any](input []T, pred func(s T) bool) []T {
@@ -12,6 +14,20 @@ func Filter[T any](input []T, pred func(s T) bool) []T {
 		if pred(v) {
 			output = append(output, v)
 		}
+	}
+	return output
+}
+
+func IsBlank(s string) bool {
+	return len(strings.TrimSpace(s)) > 0
+}
+
+func StringToInts(s string, sepRE string) []int64 {
+	re := regexp.MustCompile(sepRE)
+	var output []int64
+	for _, v := range re.Split(s, -1) {
+		iv, _ := strconv.ParseInt(v, 10, 64)
+		output = append(output, iv)
 	}
 	return output
 }
