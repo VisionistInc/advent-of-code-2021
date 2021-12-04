@@ -1,6 +1,6 @@
 import java.io.File
 
-fun pt1() {
+fun getPosition() {
     var x = 0
     var y = 0
 
@@ -18,7 +18,7 @@ fun pt1() {
     println(x * y)
 }
 
-fun pt2() {
+fun getPositionWithAim() {
     var aim = 0
     var x = 0
     var y = 0
@@ -42,6 +42,6 @@ fun pt2() {
 }
 
 fun main() {
-    pt1()
-    pt2()
+    getPosition()
+    getPositionWithAim()
 }
