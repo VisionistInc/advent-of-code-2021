@@ -1,7 +1,9 @@
 from collections import defaultdict
 import re
 
-
+# shamelessly borrowed from https://stackoverflow.com/questions/2912231/is-there-a-clever-way-to-pass-the-key-to-defaultdicts-default-factory
+# I've used this before and it's super awesome. It's a defaultdict except your lambda function gets your key
+# as a parameter.
 class keydefaultdict(defaultdict):
     def __missing__(self, key):
         if self.default_factory is None:
