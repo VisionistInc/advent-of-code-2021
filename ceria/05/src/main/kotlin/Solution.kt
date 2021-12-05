@@ -97,7 +97,6 @@ private fun solution2() :Int {
             }
         else {
             // This is a diagonal line
-            // var startPoint = line.first
             val count = ventCounts.get(line.first)?.let{
                 ventCounts.get(line.first)
             } ?: 0
@@ -126,10 +125,6 @@ private fun solution2() :Int {
         }
     }
     
-
-    // for ((key, value) in ventCounts) {
-    //     println("$key = $value")
-    // }
     return ventCounts.values.filter { it > 1 }.count()
 }  
 
