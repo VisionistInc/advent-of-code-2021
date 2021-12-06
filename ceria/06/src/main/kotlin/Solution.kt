@@ -13,33 +13,34 @@ private fun solution1(input: List<Int>) :Long {
 private fun solution2(input: List<Int>) :Long {
     return copulate(256, input)
 }   
-    
+
 private fun copulate(days: Int, input: List<Int>) :Long {
+    var fish = input.groupingBy { it }.eachCount().mapValues { it.value.toLong() }
+    var newFish = mutableMapOf<Int, Long>()
     var day = 0
-    var fish = input.toIntArray()
-    var newFishToAdd = 0
     while (day != days) {
-        for (f in fish.indices) {
-            when(fish[f]) {
-                0 -> {
-                    fish[f] = 6
-                    newFishToAdd++
-                }
-                else -> fish[f] = fish[f] - 1
-            }
+
+        // For each of the possible fish days
+        for (x in 8 downTo 0) {
+            val count = fish.get(x)?.let{
+                fish.get(x)
+            } ?: 0
+
+            if (x == 0) {
+                newFish.put(8, count)
+                val sixCount = newFish.get(6)?.let{
+                    newFish.get(6)
+                } ?: 0
+                newFish.put(6, sixCount + count)
+            } else {
+                newFish.put(x-1, count)
+            }    
         }
 
-        val modifiedFish = fish.copyOf(fish.size + newFishToAdd)
-        var x = 0
-        while (x < newFishToAdd) {
-            modifiedFish[fish.size + x] = 8
-            x++
-        }
-
-        fish = modifiedFish
-        newFishToAdd = 0
+        fish = newFish
+        newFish = mutableMapOf<Int, Long>()
         day++
     }
 
-    return fish.size.toLong()
+    return fish.values.sum()
 }
