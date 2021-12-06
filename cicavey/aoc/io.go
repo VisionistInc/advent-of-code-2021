@@ -2,11 +2,34 @@ package aoc
 
 import (
 	"bufio"
+	"constraints"
 	"os"
 	"regexp"
 	"strconv"
 	"strings"
 )
+
+// Numeric is a type constraint that accepts all go number types.
+type Numeric interface {
+	constraints.Integer | constraints.Float | constraints.Complex
+}
+
+// Feels janky, but proving a point/theory...
+func Sum9[N Numeric](nums [9]N) N {
+	var value N
+	for _, n := range nums {
+		value += n
+	}
+	return value
+}
+
+func Sum[N Numeric](nums []N) N {
+	var value N
+	for _, n := range nums {
+		value += n
+	}
+	return value
+}
 
 func Filter[T any](input []T, pred func(s T) bool) []T {
 	var output []T
