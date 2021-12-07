@@ -41,6 +41,26 @@ func Filter[T any](input []T, pred func(s T) bool) []T {
 	return output
 }
 
+func Min[T constraints.Ordered](input []T) T {
+	output := input[0]
+	for _, v := range input[1:] {
+		if v < output {
+			output = v
+		}
+	}
+	return output
+}
+
+func Max[T constraints.Ordered](input []T) T {
+	output := input[0]
+	for _, v := range input[1:] {
+		if v > output {
+			output = v
+		}
+	}
+	return output
+}
+
 func IsBlank(s string) bool {
 	return len(strings.TrimSpace(s)) > 0
 }
