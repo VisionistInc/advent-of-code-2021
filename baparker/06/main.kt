@@ -1,8 +1,6 @@
 import java.io.File
 
-var timerCounts: MutableList<Long> = mutableListOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
-
-fun getInitialTimerCounts() {
+fun getInitialTimerCounts(timerCounts: MutableList<Long>) {
     File("input.txt").forEachLine {
         it.split(",")
                 .forEach({ timer ->
@@ -13,13 +11,10 @@ fun getInitialTimerCounts() {
 }
 
 fun main(args: Array<String>) {
-    var days = 1
-    if (args.size > 0) {
-        days = args[0].toInt()
-    }
+    val timerCounts: MutableList<Long> = mutableListOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
+    getInitialTimerCounts(timerCounts)
 
-    getInitialTimerCounts()
-    for (day in 1..days) {
+    for (day in 1..args[0].toInt()) {
         val zeroCount = timerCounts.get(0)
         timerCounts.removeAt(0)
         timerCounts.add(zeroCount)
