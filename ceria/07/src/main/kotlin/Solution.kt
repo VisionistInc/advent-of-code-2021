@@ -8,10 +8,9 @@ fun main(args : Array<String>) {
 }
 
 private fun solution1(input: List<Int>) :Int {
-    val calculateFuelFor = input.groupingBy{ it }.eachCount().keys
     val fuels = mutableMapOf<Int, Int>()
 
-    for (possibleXValue in calculateFuelFor) {
+    for (possibleXValue in input) {
         var fuel = 0
 
         for (crabPos in input) {
@@ -24,9 +23,8 @@ private fun solution1(input: List<Int>) :Int {
 }
     
 private fun solution2(input: List<Int>) :Int {
-    val calculateFuelFor = input.groupingBy{ it }.eachCount().keys
-    val min = calculateFuelFor.minOrNull() ?: 0
-    val max = calculateFuelFor.maxOrNull() ?: 0
+    val min = input.minOrNull() ?: 0
+    val max = input.maxOrNull() ?: 0
     val fuels = mutableMapOf<Int, Int>()
 
     // Have to consider non-listed positions, so the entire range between the min and max
