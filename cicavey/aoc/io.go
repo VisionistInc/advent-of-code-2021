@@ -11,7 +11,7 @@ import (
 
 // Numeric is a type constraint that accepts all go number types.
 type Numeric interface {
-	constraints.Integer | constraints.Float | constraints.Complex
+	constraints.Integer | constraints.Float
 }
 
 // Feels janky, but proving a point/theory...
@@ -39,6 +39,14 @@ func Filter[T any](input []T, pred func(s T) bool) []T {
 		}
 	}
 	return output
+}
+
+func Mean[T Numeric](input []T) float64 {
+	var mean float64
+	for _, v := range input {
+		mean += float64(v)
+	}
+	return mean / float64(len(input))
 }
 
 func Min[T constraints.Ordered](input []T) T {
