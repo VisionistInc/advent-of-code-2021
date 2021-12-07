@@ -8,7 +8,7 @@ fun main(args : Array<String>) {
 }
 
 private fun solution1(input: List<Int>) :Int {
-    val fuels = mutableMapOf<Int, Int>()
+    val fuels = mutableListOf<Int>()
 
     for (possibleXValue in input) {
         var fuel = 0
@@ -16,16 +16,16 @@ private fun solution1(input: List<Int>) :Int {
         for (crabPos in input) {
             fuel += abs(crabPos - possibleXValue)
         }
-        fuels.put(possibleXValue, fuel)
+        fuels.add(fuel)
     }
 
-    return fuels.values.minOrNull() ?: 0
+    return fuels.minOrNull() ?: 0
 }
     
 private fun solution2(input: List<Int>) :Int {
     val min = input.minOrNull() ?: 0
     val max = input.maxOrNull() ?: 0
-    val fuels = mutableMapOf<Int, Int>()
+    val fuels = mutableListOf<Int>()
 
     // Have to consider non-listed positions, so the entire range between the min and max
     for (possibleXValue in min..max ) {
@@ -37,8 +37,8 @@ private fun solution2(input: List<Int>) :Int {
                 fuel += n
             }
         }
-        fuels.put(possibleXValue, fuel)
+        fuels.add(fuel)
     }
 
-    return fuels.values.minOrNull() ?: 0
+    return fuels.minOrNull() ?: 0
 }   
