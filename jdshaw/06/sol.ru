@@ -20,46 +20,45 @@
 # two more fish 7 and 9 days later
 
 # starting with one fish, how many will come
-def count_fish(val,days)
-    
-    # not enough days to reproduce?
-    return 1 unless val < days
-    
-    # create new dictionary with 0 default fish at each day
-    fish = Hash.new(0)
+def count_fish(val, days)
+  # not enough days to reproduce?
+  return 1 unless val < days
 
-    # populate first reproduction
-    fish[val+1] = 1
+  # create new dictionary with 0 default fish at each day
+  fish = Hash.new(0)
 
-    # starting at day 0
-    d = 0
-    total = 0
-    while d <= days
-        # how many fish were born that day
-        total += fish[d]
+  # populate first reproduction
+  fish[val + 1] = 1
 
-        # see above big comment
-        fish[d+7] += fish[d] unless d+7 > days
-        fish[d+9] += fish[d] unless d+9 > days
-        d += 1
-    end
+  # starting at day 0
+  d = 0
+  total = 0
+  while d <= days
+    # how many fish were born that day
+    total += fish[d]
 
-    return total + 1
+    # see above big comment
+    fish[d + 7] += fish[d] unless d + 7 > days
+    fish[d + 9] += fish[d] unless d + 9 > days
+    d += 1
+  end
+
+  total + 1
 end
 
 # read in file, split on commas, and convert each to an integer
-input = File.read("input").split(",").map(&:to_i)
+input = File.read('input').split(',').map(&:to_i)
 
 total = 0
 input.each do |x|
-    total += count_fish(x, 80)
+  total += count_fish(x, 80)
 end
 
-puts "Part 1: " + total.to_s
+puts 'Part 1: ' + total.to_s
 
 total = 0
 input.each do |x|
-    total += count_fish(x, 256)
+  total += count_fish(x, 256)
 end
 
-puts "Part 2: " + total.to_s
+puts 'Part 2: ' + total.to_s
