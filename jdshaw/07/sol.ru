@@ -1,3 +1,6 @@
+# determine how much gas is used to move every
+# crab to the position.  part2 changes gas
+# consumption algorithm
 def calculate_gas(pos, crabs, part2=false)
     gas = 0
     crabs.each do |x|
@@ -8,6 +11,7 @@ def calculate_gas(pos, crabs, part2=false)
     return gas
 end
 
+# solve one of the parts
 def solve(mid, input, part2=false)
 
     # add each side of the median to future tests
@@ -30,6 +34,7 @@ def solve(mid, input, part2=false)
         # untested neighbor to the list
         # the theory is, if fuel consumption is getting
         # worse as we move, it's not going to get better
+        # so we don't have to keep checking.
         if gas <= best_gas
             best_gas = gas
             best_pos = x
