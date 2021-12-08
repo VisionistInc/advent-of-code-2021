@@ -1,7 +1,13 @@
 import java.io.File
 
-val NON_UNIQUE_CODE_MAP =
-        mapOf("abcdeg" to 0, "abcdf" to 2, "acdfg" to 3, "bcdef" to 5, "bcdefg" to 6, "abcdfg" to 9)
+val CODE_MAP_5 =
+        mapOf(
+                "b" to 2,
+                "g" to 3,
+                "e" to 5,
+        )
+
+val CODE_MAP_6 = mapOf("f" to 0, "a" to 6, "e" to 9)
 
 fun brokenTrash1() {
     val counter = mutableListOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
@@ -33,14 +39,9 @@ fun brokenTrash2() {
                         2 -> codeString += 1
                         3 -> codeString += 7
                         4 -> codeString += 4
+                        5 -> codeString += 
                         7 -> codeString += 8
-                        else ->
-                                codeString +=
-                                        NON_UNIQUE_CODE_MAP.get(
-                                                it.toCharArray()
-                                                        .sorted()
-                                                        .joinToString(separator = "")
-                                        )
+                        else -> codeString += NON_UNIQUE_CODE_MAP.find()
                     }
                 })
         counter += codeString.toInt()
