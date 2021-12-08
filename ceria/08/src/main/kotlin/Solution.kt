@@ -30,13 +30,12 @@ private fun solution1(inputMap: Map<String,String>) :Int {
 private fun solution2(inputMap: Map<String,String>) :Int {
     var translated = mutableListOf<Int>()
 
-    // Determine the letters of the known unique numbers (2 letters = 1, 3 letters = 7, 4 letters = 4 7 letters =  8)
-    // Since the code should be the same for all signals, just use the first signal to do this
     for ((signalVal, outputVal) in inputMap) {
         var digitsTranslator = mutableMapOf<String, String>()
-
         val sig = signalVal.split(" ")
         val out = outputVal.split(" ")
+        
+        // Determine the letters of the known unique numbers (2 letters = 1, 3 letters = 7, 4 letters = 4 7 letters =  8)
         for ((digitLength, digit) in knownDigits) {
             digitsTranslator.put(digit.toString(), sig.filter{ it.length == digitLength }.first())
         }
