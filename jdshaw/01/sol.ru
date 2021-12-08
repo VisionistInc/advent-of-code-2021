@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # iterate over neighbors in a given list, count when second element is larger
 def count_greater(vals)
   count = 0

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # read in file, split on new lines
 input = File.read('input').split("\n")
 
@@ -8,9 +10,10 @@ distance = 0
 # iterate over each direction, pulling number out from command
 input.map do |e|
   p = e.split(' ')
-  if p[0][0] == 'f'
+  case p[0][0]
+  when 'f'
     distance += p[1].to_i
-  elsif p[0][0] == 'u'
+  when 'u'
     depth -= p[1].to_i
   else
     depth += p[1].to_i
@@ -27,10 +30,11 @@ aim = 0
 # iterate over each direction, pulling number out from command
 input.map do |e|
   p = e.split(' ')
-  if p[0][0] == 'f'
+  case p[0][0]
+  when 'f'
     distance += p[1].to_i
     depth += (aim * p[1].to_i)
-  elsif p[0][0] == 'u'
+  when 'u'
     aim -= p[1].to_i
   else
     aim += p[1].to_i

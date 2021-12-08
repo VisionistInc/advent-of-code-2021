@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ###
 # D00: 8
 # D09: 6       8
@@ -54,11 +56,11 @@ input.each do |x|
   total += count_fish(x, 80)
 end
 
-puts 'Part 1: ' + total.to_s
+puts "Part 1: #{total}"
 
 total = 0
 input.each do |x|
   total += count_fish(x, 256)
 end
 
-puts 'Part 2: ' + total.to_s
+puts "Part 2: #{total}"

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # janky function to determine if board is a winner
 # all marked off squares get turned into -1
 def winner(board)
