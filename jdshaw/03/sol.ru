@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # read in file, split on new lines
 input = File.read('input').split
 

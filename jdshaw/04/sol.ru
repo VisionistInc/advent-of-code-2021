@@ -86,14 +86,14 @@ calls = input[0].split(',').map(&:to_i)
 boards = []
 
 # populate boards with a bunch of 25 length number arrays
-input[1..-1].map do |e|
+input[1..].map do |e|
   boards << e.split.map(&:to_i)
 end
 
 part1(calls, boards)
 
 boards = []
-input[1..-1].map do |e|
+input[1..].map do |e|
   boards << e.split.map(&:to_i)
 end
 
