@@ -41,9 +41,11 @@ private fun solution2(inputMap: Map<String,String>) :Int {
         }
 
         // 5 letters could be either 2, 3, or 5.  
-        // 3 letters will be in common among all of them, so filter those out
         var fiveLetters = sig.filter{ it.length == 5 }.toMutableList()
+        // 6 letters could be either 0, 6, or 9.
         var sixLetters = sig.filter{ it.length == 6 }.toMutableList()
+        
+        // 3 letters will be in common among all of them, so filter those out
         var common = mutableListOf<String>()
         for (c in fiveLetters.first()) {
             if (fiveLetters[0].contains(c) && fiveLetters[1].contains(c) && fiveLetters[2].contains(c)) {
