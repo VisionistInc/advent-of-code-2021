@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # retuen next value based on current and final
 # funny thing about ruby, return isn't required
 # the last value executed is returned
@@ -26,7 +28,7 @@ input.each do |e|
   next unless (x == x_stop) || (y == y_stop)
 
   # keep adding to the hash until both x and y reach their stop
-  while true
+  loop do
     collides[[x, y]] += 1
     break if x == x_stop && y == y_stop
 
@@ -49,7 +51,7 @@ input.each do |e|
   x, y, x_stop, y_stop = e.split(',').map(&:to_i)
 
   # keep adding to the hash until both x and y reach their stop
-  while true
+  loop do
     collides[[x, y]] += 1
     break if x == x_stop && y == y_stop
 

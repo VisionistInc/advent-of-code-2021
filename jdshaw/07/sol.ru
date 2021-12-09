@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # determine how much gas is used to move every
 # crab to the position.  part2 changes gas
 # consumption algorithm
@@ -21,7 +23,7 @@ def solve(mid, input, part2 = false)
   best_pos = mid
 
   # while we have no more new positions to try
-  while tests.length > 0
+  while tests.length.positive?
 
     # pull out a position to test
     x = tests.shift
@@ -39,13 +41,8 @@ def solve(mid, input, part2 = false)
     best_gas = gas
     best_pos = x
 
-    # if moving left of mid
-    tests << if x < mid
-               x - 1
-             # or moving right of mid
-             else
-               x + 1
-             end
+    # if moving left decrement, otherwise increment
+    tests << (x < mid ? x - 1 : x + 1)
   end
 
   best_gas
