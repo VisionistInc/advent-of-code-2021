@@ -89,6 +89,13 @@ func Map[U any, V any](in []U, mapF func(value U) V) []V {
 	return out
 }
 
+func Pop[T any](input []T, empty T) (T, []T) {
+	if len(input) == 0 {
+		return empty, input
+	}
+	return input[0], input[1:]
+}
+
 func IsBlank(s string) bool {
 	return len(strings.TrimSpace(s)) > 0
 }
