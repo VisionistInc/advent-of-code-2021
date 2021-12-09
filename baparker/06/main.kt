@@ -1,24 +1,19 @@
 import java.io.File
+import java.util.Collections
 
-fun getInitialTimerCounts(timerCounts: MutableList<Long>) {
+fun main(args: Array<String>) {
+    val timerCounts: MutableList<Long> = MutableList(9) { 0 }
     File("input.txt").forEachLine {
         it.split(",")
-                .forEach({ timer ->
-                    val timerNum = timer.toInt()
+                .forEach({ 
+                    val timerNum = it.toInt()
                     timerCounts.set(timerNum, timerCounts.get(timerNum).inc())
                 })
     }
-}
-
-fun main(args: Array<String>) {
-    val timerCounts: MutableList<Long> = mutableListOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
-    getInitialTimerCounts(timerCounts)
 
     for (day in 1..args[0].toInt()) {
-        val zeroCount = timerCounts.get(0)
-        timerCounts.removeAt(0)
-        timerCounts.add(zeroCount)
-        timerCounts.set(6, timerCounts.get(6) + zeroCount)
+        Collections.rotate(timerCounts, -1)
+        timerCounts.set(6, timerCounts.get(6) + timerCounts.last())
     }
     println(timerCounts.sum())
 }

@@ -41,6 +41,18 @@ func Filter[T any](input []T, pred func(s T) bool) []T {
 	return output
 }
 
+func Partition[T any](input []T, pred func(s T) bool) ([]T, []T) {
+	var outputPass, outFail []T
+	for _, v := range input {
+		if pred(v) {
+			outputPass = append(outputPass, v)
+		} else {
+			outFail = append(outFail, v)
+		}
+	}
+	return outputPass, outFail
+}
+
 func Mean[T Numeric](input []T) float64 {
 	var mean float64
 	for _, v := range input {
@@ -67,6 +79,14 @@ func Max[T constraints.Ordered](input []T) T {
 		}
 	}
 	return output
+}
+
+func Map[U any, V any](in []U, mapF func(value U) V) []V {
+	out := make([]V, len(in))
+	for i, value := range in {
+		out[i] = mapF(value)
+	}
+	return out
 }
 
 func IsBlank(s string) bool {
