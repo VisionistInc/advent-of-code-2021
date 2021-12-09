@@ -23,18 +23,12 @@ def part1(calls, boards)
   # for each number in the call
   calls.map do |c|
     # start at the end so we don't mess up our index if we delete boards
-    i = boards.length - 1
-    while i > -1
+    (boards.length - 1).downto(0) do |i|
       # replace the called number with -1
       boards[i].map! { |x| x == c ? -1 : x }
       # check for winner
-      if winner(boards[i])
-        # remove all the -1 spots
-        boards[i].reject! { |x| x == -1 }
-        return boards[i].sum * c
-
-      end
-      i -= 1
+      # remove all the -1 spaces and sum it up
+      return c * boards[i].reject! { |x| x == -1 }.sum if winner(boards[i])
     end
   end
 end
@@ -44,24 +38,16 @@ def part2(calls, boards)
   # for each number in the call
   calls.map do |c|
     # start at the end so we don't mess up our index if we delete boards
-    i = boards.length - 1
-    while i > -1
+    (boards.length - 1).downto(0) do |i|
       # replace the called number with -1
       boards[i].map! { |x| x == c ? -1 : x }
       # check for winner
-      if winner(boards[i])
-        # if there is ony one board left, it's the last one
-        if boards.length == 1
-          # remove all the -1 spots
-          boards[i].reject! { |x| x == -1 }
-          return boards[i].sum * c
+      next unless winner(boards[i])
+      # if there is ony one board left, it's the last one
+      # remove all the -1 spaces and sum it up
+      return c * boards[i].reject! { |x| x == -1 }.sum if boards.length == 1
 
-        else
-          # not the last board, delete
-          boards.delete_at(i)
-        end
-      end
-      i -= 1
+      boards.delete_at(i)
     end
   end
 end
