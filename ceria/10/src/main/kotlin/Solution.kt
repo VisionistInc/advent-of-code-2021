@@ -24,7 +24,7 @@ val scoreValues = mapOf<Char, Int>(
 fun main(args : Array<String>) {
     val input = File(args.first()).readLines()
     println("Solution 1: " + solution1(input))
-    println("Solution 1: " + solution2(input))
+    println("Solution 2: " + solution2(input))
     
     // CANNOT USE STRING INTERPLATION BECAUSE OF SPECIAL CHARACTERS IN THE INPUT
     // println("Solution 1: ${solution1(input)}")
@@ -57,40 +57,31 @@ private fun solution1(input: List<String>) :Int {
 
 private fun solution2(input: List<String>) :Long {
     val reversedMatches = matches.entries.associate { (key, value) -> value to key }
-    var filteredInput = input.toMutableList()
+    val completionStr = mutableListOf<String>()
 
     for (line in input) {
         val syntax = Stack<Char>()
+        var broke = false
         for (c in line) {
             if (c in leftChars) {   
                 syntax.push(c)
             } else {
                 val shouldMatch = syntax.pop()
                 if (!shouldMatch.equals(matches.get(c))) {
-                    filteredInput.remove(line)
+                    broke = true
                     break
                 }
             }
         }
-    }
 
-    val completionStr = mutableListOf<String>()
-    for (line in filteredInput) {
-        val syntax = Stack<Char>()
-        for (c in line) {
-            if (c in leftChars) {   
-                syntax.push(c)
-            } else {
-                syntax.pop()
+        if (!broke) {
+            var completion = ""
+            while (!syntax.isEmpty()) {
+                val match = syntax.pop()
+                completion += reversedMatches.get(match)
             }
+            completionStr.add(completion)
         }
-
-        var completion = ""
-        while (!syntax.isEmpty()) {
-            val match = syntax.pop()
-            completion += reversedMatches.get(match)
-        }
-        completionStr.add(completion)
     }
 
     val scores = mutableListOf<Long>()
@@ -103,6 +94,5 @@ private fun solution2(input: List<String>) :Long {
     }
 
     scores.sort()
-    val middle = scores.size/2
-    return scores.get(middle)  // since the list is 0 based, dividing the size by 2 gives the middle index.
+    return scores.get(scores.size/2)  // since the list is 0 based, dividing the size by 2 gives the middle index.
 }
