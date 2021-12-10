@@ -57,7 +57,7 @@ private fun solution1(input: List<String>) :Int {
 
 private fun solution2(input: List<String>) :Long {
     val reversedMatches = matches.entries.associate { (key, value) -> value to key }
-    val completionStr = mutableListOf<String>()
+    val scores = mutableListOf<Long>()
 
     for (line in input) {
         val syntax = Stack<Char>()
@@ -80,19 +80,15 @@ private fun solution2(input: List<String>) :Long {
                 val match = syntax.pop()
                 completion += reversedMatches.get(match)
             }
-            completionStr.add(completion)
-        }
-    }
 
-    val scores = mutableListOf<Long>()
-    for (completion in completionStr) {
-        var score = 0L
-        for (c in completion) {
-            score = (score * 5) + scoreValues.get(c)!!
+            var score = 0L
+            for (c in completion) {
+                score = (score * 5) + scoreValues.get(c)!!
+            }
+            scores.add(score)
         }
-        scores.add(score)
     }
 
     scores.sort()
-    return scores.get(scores.size/2)  // since the list is 0 based, dividing the size by 2 gives the middle index.
+    return scores.get(scores.size/2)  // since the list is 0 based, dividing the size by 2 and ignoring the remainder gives the middle index.
 }
