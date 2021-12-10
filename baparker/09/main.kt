@@ -1,101 +1,94 @@
 import java.io.File
 
-fun findMin(
-        heightMatrix: MutableList<MutableList<String>>,
+data class Node(val value: Int) {
+    var visited = false
+}
+
+data class Counter(var value: Int) {
+    fun incCounter() {
+        this.value++
+    }
+}
+
+fun findMins(
+        heightMatrix: MutableList<MutableList<Node>>,
         x: Int,
         y: Int,
 ) {
-    val current = heightMatrix.get(y).get(x).get(0)
-    for (i in -1..1 step 2) {
-        val xIndex = x + i
-        val yIndex = y + i
-        if (xIndex >= 0 && xIndex < heightMatrix.get(y).size) {
-            val newPoint = heightMatrix.get(y).get(xIndex)
-            if (newPoint.get(0) <= current) {
-                heightMatrix.get(y).set(x, current + "*")
-                if (!newPoint.endsWith("*")) {
-                    findMin(
+    val current = heightMatrix.get(y).get(x).value
+    listOf(listOf(x - 1, y), listOf(x + 1, y), listOf(x, y - 1), listOf(x, y + 1)).forEach {
+        val xIndex = it.get(0)
+        val yIndex = it.get(1)
+        val newPoint = heightMatrix.getOrNull(yIndex)?.getOrNull(xIndex)
+        if (newPoint != null) {
+            if (newPoint.value <= current) {
+                heightMatrix.get(y).get(x).visited = true
+                if (!newPoint.visited) {
+                    findMins(
                             heightMatrix,
                             xIndex,
-                            y,
-                    )
-                }
-            } else {
-                if (!newPoint.endsWith("*")) {
-                    heightMatrix.get(y).set(xIndex, newPoint + "*")
-                }
-            }
-        }
-        if (yIndex >= 0 && yIndex < heightMatrix.size) {
-            val newPoint = heightMatrix.get(yIndex).get(x)
-            if (newPoint.get(0) <= current) {
-                heightMatrix.get(y).set(x, current + "*")
-                if (!newPoint.endsWith("*")) {
-                    findMin(
-                            heightMatrix,
-                            x,
                             yIndex,
                     )
                 }
             } else {
-                if (!newPoint.endsWith("*")) {
-                    heightMatrix.get(yIndex).set(x, newPoint + "*")
+                if (!newPoint.visited) {
+                    heightMatrix.get(yIndex).get(xIndex).visited = true
                 }
             }
         }
     }
 }
 
-fun findBasins(
-        heightMatrix: MutableList<MutableList<String>>,
-        x: Int,
-        y: Int,
-        counter: MutableList<Int>
-) {
-    val current = heightMatrix.get(y).get(x).get(0)
-    counter.set(0, counter.get(0).inc())
-    heightMatrix.get(y).set(x, current + "*")
-    for (i in -1..1 step 2) {
-        val xIndex = x + i
-        val yIndex = y + i
-        if (xIndex >= 0 && xIndex < heightMatrix.get(y).size) {
-            val newPoint = heightMatrix.get(y).get(xIndex)
-            if (newPoint != "9" && !newPoint.endsWith("*")) {
-                findBasins(heightMatrix, xIndex, y, counter)
-            }
-        }
-        if (yIndex >= 0 && yIndex < heightMatrix.size) {
-            val newPoint = heightMatrix.get(yIndex).get(x)
-
-            if (newPoint != "9" && !newPoint.endsWith("*")) {
-                findBasins(heightMatrix, x, yIndex, counter)
+fun findBasins(heightMatrix: MutableList<MutableList<Node>>, x: Int, y: Int, counter: Counter) {
+    heightMatrix.get(y).get(x).visited = true
+    counter.incCounter()
+    listOf(listOf(x - 1, y), listOf(x + 1, y), listOf(x, y - 1), listOf(x, y + 1)).forEach {
+        val xIndex = it.get(0)
+        val yIndex = it.get(1)
+        val newPoint = heightMatrix.getOrNull(yIndex)?.getOrNull(xIndex)
+        if (newPoint != null) {
+            if (newPoint.value != 9 && !newPoint.visited) {
+                findBasins(heightMatrix, xIndex, yIndex, counter)
             }
         }
     }
 }
 
 fun main() {
-    var heightMatrix: MutableList<MutableList<String>> = mutableListOf()
-    File("input.txt").forEachLine { heightMatrix.add(it.map { it.toString() }.toMutableList()) }
+    val heightMatrixMins: MutableList<MutableList<Node>> = mutableListOf()
+    val heightMatrixBasins: MutableList<MutableList<Node>> = mutableListOf()
+    File("input.txt").forEachLine {
+        heightMatrixMins.add(it.map { Node(it.digitToInt()) }.toMutableList())
+        heightMatrixBasins.add(it.map { Node(it.digitToInt()) }.toMutableList())
+    }
 
-    var counter = mutableListOf(0)
-    var counterList: MutableList<Int> = mutableListOf()
-
-    heightMatrix.forEachIndexed { y, heightRow ->
+    heightMatrixMins.forEachIndexed { y, heightRow ->
         heightRow.forEachIndexed { x, height ->
-            if (height != "9" && !height.endsWith("*")) {
-                findBasins(heightMatrix, x, y, counter)
-                counterList.add(counter.get(0))
-                counter.set(0, 0)
+            if (!height.visited) {
+                findMins(heightMatrixMins, x, y)
             }
         }
     }
+    println(
+            heightMatrixMins.flatten().fold(0) { sum, height ->
+                if (!height.visited) sum + height.value + 1 else sum
+            }
+    )
 
-    println(counterList.sorted().reversed().subList(0, 3).forEach { count -> println(count) })
-
-    // heightMatrix.flatten().forEach { height ->
-    //     if () {
-    //         sum += height.toInt() + 1
-    //     }
-    // }
+    val counterList: MutableList<Int> = mutableListOf()
+    var counter = Counter(0)
+    heightMatrixBasins.forEachIndexed { y, heightRow ->
+        heightRow.forEachIndexed { x, height ->
+            if (height.value != 9 && !height.visited) {
+                findBasins(heightMatrixBasins, x, y, counter)
+                counterList.add(counter.value)
+                counter.value = 0
+            }
+        }
+    }
+    println(
+            counterList.sortedDescending().subList(0, 3).fold(1) { product, count ->
+                product * count
+            }
+    )
 }
