@@ -62,7 +62,8 @@ func part1(lines []string) {
 			case '<':
 				tokenStack.Push('<')
 			case ']':
-				expected := tokenStack.Peek()
+				// should always have something in the stack for this use case
+				expected, _ := tokenStack.Peek()
 				if expected != getMatchFor(']') {
 					// error!
 					syntaxErrorScore += getSyntaxErrorScoreFor(']')
@@ -71,7 +72,8 @@ func part1(lines []string) {
 					tokenStack.Pop()
 				}
 			case ')':
-				expected := tokenStack.Peek()
+				// should always have something in the stack for this use case
+				expected, _ := tokenStack.Peek()
 				if expected != getMatchFor(')') {
 					// error!
 					syntaxErrorScore += getSyntaxErrorScoreFor(')')
@@ -81,7 +83,8 @@ func part1(lines []string) {
 				}
 
 			case '}':
-				expected := tokenStack.Peek()
+				// should always have something in the stack for this use case
+				expected, _ := tokenStack.Peek()
 				if expected != getMatchFor('}') {
 					// error!
 					syntaxErrorScore += getSyntaxErrorScoreFor('}')
@@ -91,7 +94,8 @@ func part1(lines []string) {
 				}
 
 			case '>':
-				expected := tokenStack.Peek()
+				// should always have something in the stack for this use case
+				expected, _ := tokenStack.Peek()
 				if expected != getMatchFor('>') {
 					// error!
 					syntaxErrorScore += getSyntaxErrorScoreFor('>')
@@ -143,7 +147,8 @@ func part2(lines []string) {
 			case '<':
 				tokenStack.Push('<')
 			case ']':
-				expected := tokenStack.Peek()
+				// should always have something in the stack for this use case
+				expected, _ := tokenStack.Peek()
 				if expected != getMatchFor(']') {
 					// error!
 					syntaxError = true
@@ -151,7 +156,8 @@ func part2(lines []string) {
 					tokenStack.Pop()
 				}
 			case ')':
-				expected := tokenStack.Peek()
+				// should always have something in the stack for this use case
+				expected, _ := tokenStack.Peek()
 				if expected != getMatchFor(')') {
 					// error!
 					syntaxError = true
@@ -160,7 +166,8 @@ func part2(lines []string) {
 				}
 
 			case '}':
-				expected := tokenStack.Peek()
+				// should always have something in the stack for this use case
+				expected, _ := tokenStack.Peek()
 				if expected != getMatchFor('}') {
 					// error!
 					syntaxError = true
@@ -169,7 +176,8 @@ func part2(lines []string) {
 				}
 
 			case '>':
-				expected := tokenStack.Peek()
+				// should always have something in the stack for this use case
+				expected, _ := tokenStack.Peek()
 				if expected != getMatchFor('>') {
 					// error!
 					syntaxError = true
@@ -187,7 +195,8 @@ func part2(lines []string) {
 			autocompleteScore := int64(0)
 
 			for !tokenStack.IsEmpty() {
-				r := tokenStack.Pop()
+				// should always have something in the stack for this use case
+				r, _ := tokenStack.Pop()
 				autocompleteScore = autocompleteScore*5 + int64(getAutoCompleteScoreFor(getMatchFor(r)))
 			}
 			autocompleteScores = append(autocompleteScores, autocompleteScore)

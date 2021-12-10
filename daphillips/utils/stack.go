@@ -10,24 +10,30 @@ func (s *Stack[T]) Push(next T) {
 	*s = append(*s, next)
 }
 
-// TODO I don't want to have to panic here... but in order to get that I'd need to be able to assign nil on return, which i can only do with a pointer
-func (s *Stack[T]) Pop() T {
+// removes the top element of the stack and returns the value in addition to a bool indicating the element was indeed in the stack
+// if the stack is empty, returns the default "zero" value of T and false
+func (s *Stack[T]) Pop() (T, bool) {
 	if s.IsEmpty() {
-		panic("popping on empty stack!")
+		// since there was nothing in the stack, we'll just return the default zero value of type T
+		var nothing T
+		return nothing, false
 	}
 
 	lastIndex := len(*s) - 1
 	lastElement := (*s)[lastIndex]
 	*s = (*s)[:lastIndex]
 
-	return lastElement
+	return lastElement, true
 
 }
 
-// TODO I don't want to have to panic here... but in order to get that I'd need to be able to assign nil on return, which i can only do with a pointer
-func (s *Stack[T]) Peek() T {
+// returns (but does not remove) the top element of the stack and returns the value in addition to a bool indicating the element was indeed in the stack
+// if the stack is empty, returns the default "zero" value of T and false
+func (s *Stack[T]) Peek() (T, bool) {
 	if s.IsEmpty() {
-		panic("peeking on empty stack!")
+		// since there was nothing in the stack, we'll just return the default zero value of type T
+		var nothing T
+		return nothing, false
 	}
-	return (*s)[len(*s)-1]
+	return (*s)[len(*s)-1], true
 }
