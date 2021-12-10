@@ -23,26 +23,23 @@
 
 # starting with one fish, how many will come
 def count_fish(val, days)
-  # not enough days to reproduce?
-  return 1 unless val < days
-
   # create new dictionary with 0 default fish at each day
   fish = Hash.new(0)
 
   # populate first reproduction
   fish[val + 1] = 1
 
-  # starting at day 0
-  d = 0
+  # total fish
   total = 0
-  while d <= days
+
+  # starting at day 0
+  0.upto(days) do |d|
     # how many fish were born that day
     total += fish[d]
 
-    # see above big comment
-    fish[d + 7] += fish[d] unless d + 7 > days
-    fish[d + 9] += fish[d] unless d + 9 > days
-    d += 1
+    # add future fish for every fish on this day
+    fish[d + 7] += fish[d]
+    fish[d + 9] += fish[d]
   end
 
   total + 1
