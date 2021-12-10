@@ -15,19 +15,19 @@ def measure_basin(input, group)
   # while we have spots in our group
   while group.length.positive?
     # grab the next spot
-    row, col = group.shift
+    y, x = group.shift
 
     # if it's 9, ignore it
-    next unless input[row][col] != 9
+    next unless input[y][x] != 9
 
     # increment our size and change it to 9
     # so we never consider it again
     size += 1
-    input[row][col] = 9
+    input[y][x] = 9
 
     # add all the neighbors to the group, we don't care
     # what the value is, we'll catch next pass
-    add_spots_to_group(input, group, row, col)
+    add_spots_to_group(input, group, y, x)
   end
   size
 end
@@ -36,19 +36,19 @@ input = File.read('input').split("\n").map! { |x| x.split('').map(&:to_i) }
 
 risk = 0
 # iterate over every spot
-0.upto(input.length - 1) do |row|
-  0.upto(input[row].length - 1) do |col|
+input.each_with_index do |row, y|
+  row.each_with_index do |val, x|
     # create a list of neighbors to compare with
     # make sure to do bounds checking
     compare = []
-    compare << input[row - 1][col] if row.positive?
-    compare << input[row + 1][col] if row < input.length - 1
-    compare << input[row][col - 1] if col.positive?
-    compare << input[row][col + 1] if col < input[row].length - 1
+    compare << input[y - 1][x] if y.positive?
+    compare << input[y + 1][x] if y < input.length - 1
+    compare << input[y][x - 1] if x.positive?
+    compare << input[y][x + 1] if x < row.length - 1
     # throw away any that the current spot is less than
-    compare.reject! { |z| input[row][col] < z }
+    compare.reject! { |z| val < z }
     # if none are left, the spot was the smallest
-    risk += (1 + input[row][col]) if compare.none?
+    risk += (1 + val) if compare.none?
   end
 end
 
@@ -58,10 +58,10 @@ puts format('Part 1: %d', risk)
 basins = []
 
 # iterate over all the spaces
-0.upto(input.length - 1) do |row|
-  0.upto(input[row].length - 1) do |col|
+input.each_with_index do |row, y|
+  row.each_with_index do |val, x|
     # if the spot is not 9, see how large the basin is
-    basins << measure_basin(input, [[row, col]]) if input[row][col] != 9
+    basins << measure_basin(input, [[y, x]]) if val != 9
   end
 end
 

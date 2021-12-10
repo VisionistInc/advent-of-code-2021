@@ -18,17 +18,21 @@ def winner(board)
   false
 end
 
+# replace any spots that match num with -1
+def mark_spots(board, num)
+  board.map! { |x| x == num ? -1 : x }
+end
+
 # solve part 1
 def part1(calls, boards)
   # for each number in the call
-  calls.map do |c|
-    # start at the end so we don't mess up our index if we delete boards
-    (boards.length - 1).downto(0) do |i|
-      # replace the called number with -1
-      boards[i].map! { |x| x == c ? -1 : x }
-      # check for winner
+  calls.each do |c|
+    # mark spots on all boards
+    boards.map! { |board| mark_spots(board, c) }
+    # check all boards for winners
+    boards.each do |board|
       # remove all the -1 spaces and sum it up
-      return c * boards[i].reject! { |x| x == -1 }.sum if winner(boards[i])
+      return c * board.reject! { |x| x == -1 }.sum if winner(board)
     end
   end
 end
@@ -36,18 +40,18 @@ end
 # solve part 2
 def part2(calls, boards)
   # for each number in the call
-  calls.map do |c|
-    # start at the end so we don't mess up our index if we delete boards
-    (boards.length - 1).downto(0) do |i|
-      # replace the called number with -1
-      boards[i].map! { |x| x == c ? -1 : x }
+  calls.each do |c|
+    # mark spots on all boards
+    boards.map! { |board| mark_spots(board, c) }
+    # check each board
+    boards.each do |board|
       # check for winner
-      next unless winner(boards[i])
+      next unless winner(board)
       # if there is ony one board left, it's the last one
       # remove all the -1 spaces and sum it up
-      return c * boards[i].reject! { |x| x == -1 }.sum if boards.length == 1
+      return c * board.reject! { |x| x == -1 }.sum if boards.length == 1
 
-      boards.delete_at(i)
+      boards.delete(board)
     end
   end
 end
