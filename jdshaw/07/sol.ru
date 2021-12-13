@@ -3,7 +3,7 @@
 # determine how much gas is used to move every
 # crab to the position.  part2 changes gas
 # consumption algorithm
-def calculate_gas(pos, crabs, part2 = false)
+def calculate_gas(pos, crabs, part2)
   gas = 0
   crabs.each do |x|
     g = (pos - x).abs
@@ -14,16 +14,15 @@ def calculate_gas(pos, crabs, part2 = false)
 end
 
 # solve one of the parts
-def solve(mid, input, part2 = false)
+def solve(mid, input, part2)
   # add each side of the median to future tests
   tests = [mid + 1, mid - 1]
 
   # our initial best gas is the median
   best_gas = calculate_gas(mid, input, part2)
-  best_pos = mid
 
   # while we have no more new positions to try
-  while tests.length.positive?
+  while tests.any?
 
     # pull out a position to test
     x = tests.shift
@@ -39,7 +38,6 @@ def solve(mid, input, part2 = false)
     next unless gas <= best_gas
 
     best_gas = gas
-    best_pos = x
 
     # if moving left decrement, otherwise increment
     tests << (x < mid ? x - 1 : x + 1)
@@ -61,5 +59,5 @@ mid = if input.length.even?
         input[input.length / 2]
       end
 
-puts format('Part 1: %d', solve(mid, input))
+puts format('Part 1: %d', solve(mid, input, false))
 puts format('Part 2: %d', solve(mid, input, true))
