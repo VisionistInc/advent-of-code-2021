@@ -49,8 +49,8 @@ private fun solution2(p: MutableSet<Pair<Int, Int>>) {
         }
     }
     
-    var maxRows = points.map{ it.second }.maxOrNull()!!
-    var maxCols = points.map{ it.first }.maxOrNull()!!
+    var maxRows = points.map{ it.second }.maxOrNull() ?: 0
+    var maxCols = points.map{ it.first }.maxOrNull() ?: 0
     for (row in 0..maxRows) {
         for (col in 0..maxCols) {
             if (points.contains(Pair<Int,Int>(col, row))) {
