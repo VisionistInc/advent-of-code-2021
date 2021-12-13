@@ -176,3 +176,17 @@ func AbsInt64(n int64) int64 {
 	y := n >> 63       // y ← x ⟫ 63
 	return (n ^ y) - y // (x ⨁ y) - y
 }
+
+var exists = struct{}{}
+
+type Set[T comparable] struct {
+	data map[T]struct{}
+}
+
+func NewSet[T comparable]() *Set[T] {
+	return &Set[T]{make(map[T]struct{})}
+}
+
+func (s *Set[T]) Add(v T) {
+	s.data[v] = exists
+}
