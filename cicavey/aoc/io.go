@@ -96,6 +96,14 @@ func Pop[T any](input []T, empty T) (T, []T) {
 	return input[0], input[1:]
 }
 
+func Pop2[T any](input []T) (T, []T) {
+	var empty T
+	if len(input) == 0 {
+		return empty, input
+	}
+	return input[0], input[1:]
+}
+
 func IsBlank(s string) bool {
 	return len(strings.TrimSpace(s)) > 0
 }
