@@ -96,6 +96,14 @@ func Pop[T any](input []T, empty T) (T, []T) {
 	return input[0], input[1:]
 }
 
+func Pop2[T any](input []T) (T, []T) {
+	var empty T
+	if len(input) == 0 {
+		return empty, input
+	}
+	return input[0], input[1:]
+}
+
 func IsBlank(s string) bool {
 	return len(strings.TrimSpace(s)) > 0
 }
@@ -167,4 +175,18 @@ func ForLine(fname string, fn func(line string)) {
 func AbsInt64(n int64) int64 {
 	y := n >> 63       // y ← x ⟫ 63
 	return (n ^ y) - y // (x ⨁ y) - y
+}
+
+var exists = struct{}{}
+
+type Set[T comparable] struct {
+	data map[T]struct{}
+}
+
+func NewSet[T comparable]() *Set[T] {
+	return &Set[T]{make(map[T]struct{})}
+}
+
+func (s *Set[T]) Add(v T) {
+	s.data[v] = exists
 }
