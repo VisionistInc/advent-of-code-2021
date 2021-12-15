@@ -13,6 +13,14 @@ func (s Set[T]) Add(element T) bool {
 	return true
 }
 
+func (s Set[T]) Remove(element T) bool {
+	if _, present := s[element]; present {
+		delete(s, element)
+		return true
+	}
+	return false
+}
+
 func (s Set[T]) AddAll(elements []T) bool {
 	addedAtLeastOne := false
 	for _, e := range elements {
