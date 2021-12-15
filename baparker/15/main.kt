@@ -40,15 +40,25 @@ fun main() {
     val cavePositionMatrix: MutableList<MutableList<CavePosition>> = mutableListOf()
 
     var yIndex = 0
-    File("input.txt").forEachLine {
-        cavePositionMatrix.add(
-                it
-                        .mapIndexed { xIndex, pos ->
-                            CavePosition(pos.digitToInt(), xIndex, yIndex)
-                        }
-                        .toMutableList()
-        )
-        yIndex++
+    for (y in 0 until 5) {
+        File("input.txt").forEachLine {
+            val line: MutableList<CavePosition> = mutableListOf()
+            for (x in 0 until 5) {
+                it.forEachIndexed { xIndex, pos ->
+                    val newPos = pos.digitToInt() + x + y
+                    line.add(
+                            CavePosition(
+                                    if (newPos == 9) 9 else newPos % 9,
+                                    xIndex + (x * 100),
+                                    yIndex
+                            )
+                    )
+                }
+            }
+            cavePositionMatrix.add(line)
+
+            yIndex++
+        }
     }
 
     cavePositionMatrix.last().last().distanceFromStart =
