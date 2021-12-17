@@ -5,6 +5,7 @@ XMAX = 1
 YMIN = 2
 YMAX = 3
 
+# see if x,y is in the trench
 def in_range(x_pos, y_pos, trench)
   x_pos >= trench[XMIN] &&
     x_pos <= trench[XMAX] &&
